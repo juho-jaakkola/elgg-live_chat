@@ -6,7 +6,7 @@
 elgg_register_event_handler('init', 'system', function() {
 	elgg_require_js('live_chat');
 
-	elgg_extend_view('page/elements/body', 'live_chat/bar');
+	elgg_extend_view('page/elements/body', 'live_chat/users');
 	elgg_extend_view('elgg.css', 'live_chat/css');
 });
 

@@ -7,12 +7,9 @@ define(function(require) {
 	});
 
 	pusher.registerListener('live_chat', function(data) {
-		var users = '';
-
 		$.each(data.users, function(key, user_guid) {
-			users += "<li>" + user_guid + "</li>";
+			$('#elgg-chat-users #elgg-user-' + user_guid + ' .elgg-body')
+				.prepend('<span class="elgg-icon fa fa-circle"></span>');
 		});
-
-		$('#elgg-online-users .elgg-body').html("<ul>" + users + "</ul>");
 	});
 });
