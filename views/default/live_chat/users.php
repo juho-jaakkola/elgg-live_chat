@@ -9,6 +9,7 @@ $friends = elgg_list_entities_from_relationship(array(
 	'relationship_guid' => elgg_get_logged_in_user_guid(),
 	'inverse_relationship' => false,
 	'type' => 'user',
+	'item_view' => 'live_chat/user',
 	'full_view' => false,
 ));
 

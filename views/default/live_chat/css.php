@@ -8,7 +8,10 @@
 	margin-bottom: 0;
 }
 
-#elgg-chat-users .fa-circle {
-	color: green;
+#elgg-chat-users .elgg-icon-circle {
 	float: right;
+}
+
+#elgg-chat-users .elgg-status-online .elgg-icon-circle {
+	color: green;
 }
