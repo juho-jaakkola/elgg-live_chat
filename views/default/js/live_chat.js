@@ -2,7 +2,7 @@ define(function(require) {
 	var $ = require('jquery');
 	var pusher = require('pusher');
 
-	var windows = {};
+	var users = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
 		$('.elgg-chat-messages').append(data.html);
@@ -21,21 +21,38 @@ define(function(require) {
 	$(document).on('click', '.elgg-chat-user', function(e) {
 		e.preventDefault();
 
-		var guid = $(this).data('guid');
+		var user_guid = $(this).data('guid');
 		var name = $(this).text();
 
-		if (guid in windows) {
+		if (user_guid in users) {
 			// TODO Move focus to the chat window?
 			return;
 		}
 
-		windows[guid] = true;
+		// Check whether there is an existing chat with the chosen user
+		elgg.action('live_chat/open', {
+			//dataType: "json",
+			data: {guid: user_guid},
+			success: function(json) {
+				var chat_guid = json.output.chat_guid;
 
-		$('#elgg-chat-bar').append(
-			'<div class="elgg-module elgg-module-featured">' +
-				'<div class="elgg-head">' + name + '</div>' +
-				'<div class="elgg-body">This feature does not work yet. Try again later.</div>' +
-			'</div>'
-		);
+				users[user_guid] = true;
+
+				$('#elgg-chat-bar').append(
+					'<div class="elgg-module elgg-module-featured elgg-module-chat">' +
+						'<div class="elgg-head">' + name + '</div>' +
+						'<div class="elgg-body">' +
+							'<ul class="elgg-chat-' + chat_guid + ' elgg-chat-messages">' + json.output.messages +
+								'<input type="text" class="elgg-chat-input data-guid=' + chat_guid + '" />' +
+							'</ul>' +
+						'</div>' +
+					'</div>'
+				);
+
+				var chatWindow = $('.elgg-chat-' + chat_guid);
+
+				chatWindow.scrollTop(chatWindow.height());
+			}
+		});
 	});
 });
