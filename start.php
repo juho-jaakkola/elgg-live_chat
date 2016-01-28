@@ -32,3 +32,25 @@ elgg_register_event_handler('create', 'object', function($event, $type, $object)
 		$socket->send(json_encode($msg));
 	}
 });
+
+/**
+ * Allow user to create a new chat instance using site as its owner.
+ *
+ * This allows adding chats that are not owned by any specific user
+ * therefore making all participants equal.
+ *
+ * @param string  $hook   'container_permissions_check'
+ * @param string  $type   'object'
+ * @param boolean $return Is the user allowed to create the object inside the container?
+ * @param array   $params Array containing user, container, entity type and subtype
+ */
+elgg_register_plugin_hook_handler('container_permissions_check', 'object', function($hook, $type, $return, $params) {
+	$container = $params['container'];
+	$subtype = $params['subtype'];
+
+	if ($container instanceof ElggSite && $subtype === 'chat') {
+		$return = true;
+	}
+
+	return $return;
+});
