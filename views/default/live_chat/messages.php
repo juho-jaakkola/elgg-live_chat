@@ -19,16 +19,9 @@ $messages = array_reverse($messages);
 
 $list = '';
 foreach ($messages as $message) {
-	$is_owner = ($message->owner_guid == $user->guid);
-
 	$message = elgg_view('page/components/image_block', array(
-		'image' => $is_owner ? '' : elgg_view_entity_icon($message->getOwnerEntity(), 'tiny', array(
-			'use_hover' => false
-		)),
-		'body' => elgg_view('output/longtext', array(
-			'value' => $message->description,
-			'class' => $is_owner ? 'float-alt' : 'float',
-		))
+		'image' => elgg_view_entity_icon($message->getOwnerEntity(), 'tiny'),
+		'body' => "<div class=\"elgg-content\">{$message->description}</div>",
 	));
 
 	$list .= "<li>$message</li>";

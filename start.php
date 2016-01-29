@@ -10,6 +10,8 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_extend_view('elgg.css', 'live_chat/css');
 
 	elgg_register_action('live_chat/open', __DIR__ . '/actions/live_chat/open.php');
+
+	elgg_register_simplecache_view('live_chat/message.html');
 });
 
 elgg_register_event_handler('create', 'object', function($event, $type, $object) {
@@ -21,12 +23,23 @@ elgg_register_event_handler('create', 'object', function($event, $type, $object)
 	$socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
 	$socket->connect("tcp://localhost:5555");
 
+	$chat = $object->getContainerEntity();
+	$owner = $object->getOwnerEntity();
+
 	$msg = new \stdClass();
 	$msg->consumer = 'live_chat';
-	$msg->chat_guid = $object->container_guid;
-	$msg->html = elgg_view_entity($object);
-
-	$chat = $object->getContainerEntity();
+	$msg->message = (object) array(
+		'message' => $object->description,
+		'container' => (object) array(
+			'guid' => $object->container_guid,
+		),
+		'owner' => (object) array(
+			'guid' => $object->owner_guid,
+			'name' => $owner->name,
+			'url' => $owner->getURL(),
+			'icon_url' => $owner->getIconURL('tiny'),
+		),
+	);
 
 	foreach ($chat->getMemberGuids() as $user_guid) {
 		$msg->recipient_guid = $user_guid;

@@ -1,11 +1,20 @@
 define(function(require) {
 	var $ = require('jquery');
 	var pusher = require('pusher');
+	var mustache = require('mustache');
+	var messageTemplate = require('text!live_chat/message.html');
 
 	var users = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
-		$('.elgg-chat-' + data.chat_guid).append(data.html);
+		var view = mustache.render(messageTemplate, {
+			user_url: data.message.owner.url,
+			icon_url: data.message.owner.icon_url,
+			name: data.message.owner.name,
+			message: data.message.message
+		});
+
+		$('.elgg-chat-' + data.message.container.guid).append(view);
 	});
 
 	pusher.registerListener('live_chat', function(data) {
@@ -68,7 +77,6 @@ define(function(require) {
 				message: message,
 			}, success: function(json) {
 				input.val('');
-				$('.elgg-chat-' + chat_guid).append(message);
 			}
 		});
 	});

@@ -27,8 +27,8 @@
 	margin: 6px 0;
 }
 
-.elgg-module-chat .elgg-output {
-	margin: 0;
+.elgg-module-chat .elgg-content {
+	margin: 0 5px 0 0;
 	padding: 5px 10px;
 	border: 1px solid #ccc;
 	border-radius: 15px;
