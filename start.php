@@ -23,6 +23,7 @@ elgg_register_event_handler('create', 'object', function($event, $type, $object)
 
 	$msg = new \stdClass();
 	$msg->consumer = 'live_chat';
+	$msg->chat_guid = $object->container_guid;
 	$msg->html = elgg_view_entity($object);
 
 	$chat = $object->getContainerEntity();

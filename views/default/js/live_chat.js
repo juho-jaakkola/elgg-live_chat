@@ -5,7 +5,7 @@ define(function(require) {
 	var users = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
-		$('.elgg-chat-messages').append(data.html);
+		$('.elgg-chat-' + data.chat_guid).append(data.html);
 	});
 
 	pusher.registerListener('live_chat', function(data) {
