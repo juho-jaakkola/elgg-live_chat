@@ -46,13 +46,34 @@ if (empty($chats)) {
 } else {
 	$chat =  $chats[0];
 
-	$messages = elgg_view('live_chat/messages', array(
-		'entity' => $chat,
-		'user' => $owner,
+	/**
+	 * Get messages ascending to get latest messages and then reverse
+	 * them to make the order chronological (latest messages at bottom).
+	 */
+	$messages = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'chat_message',
+		'container_guid' => $chat->guid,
+		'limit' => 6,
+		'order_by' => 'e.time_created desc',
+		'pagination' => false,
 	));
+	$messages = array_reverse($messages);
+
+	$json = array();
+	foreach ($messages as $message) {
+		$owner = $message->getOwnerEntity();
+
+		$json[] = (object) array(
+			'user_url' => $owner->getURL(),
+			'icon_url' => $owner->getIconURL('tiny'),
+			'name' => $owner->name,
+			'message' => $message->description,
+		);
+	}
 }
 
 echo json_encode((object) array(
 	'chat_guid' => $chat->guid,
-	'messages' => $messages,
+	'messages' => $json,
 ));

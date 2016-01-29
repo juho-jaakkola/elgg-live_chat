@@ -3,6 +3,7 @@ define(function(require) {
 	var pusher = require('pusher');
 	var mustache = require('mustache');
 	var messageTemplate = require('text!live_chat/message.html');
+	var moduleTemplate = require('text!live_chat/module.html');
 
 	var users = {};
 
@@ -47,15 +48,18 @@ define(function(require) {
 
 				users[user_guid] = true;
 
-				$('#elgg-chat-bar').append(
-					'<div class="elgg-module elgg-module-featured elgg-module-chat">' +
-						'<div class="elgg-head">' + name + '</div>' +
-						'<div class="elgg-body">' +
-							'<ul class="elgg-chat-' + chat_guid + ' elgg-chat-messages">' + json.output.messages + '</ul>' +
-							'<form class="elgg-chat-input" data-guid=' + chat_guid + '><input type="text" /></form>' +
-						'</div>' +
-					'</div>'
-				);
+				var messages = '';
+				$(json.output.messages).each(function(key, message) {
+					messages += mustache.render(messageTemplate, message);
+				});
+
+				var view = mustache.render(moduleTemplate, {
+					name: 'Test',
+					messages: messages,
+					chat_guid: chat_guid
+				});
+
+				$('#elgg-chat-bar').append(view);
 
 				var chatWindow = $('.elgg-chat-' + chat_guid);
 
