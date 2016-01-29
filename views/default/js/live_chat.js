@@ -42,9 +42,8 @@ define(function(require) {
 					'<div class="elgg-module elgg-module-featured elgg-module-chat">' +
 						'<div class="elgg-head">' + name + '</div>' +
 						'<div class="elgg-body">' +
-							'<ul class="elgg-chat-' + chat_guid + ' elgg-chat-messages">' + json.output.messages +
-								'<input type="text" class="elgg-chat-input data-guid=' + chat_guid + '" />' +
-							'</ul>' +
+							'<ul class="elgg-chat-' + chat_guid + ' elgg-chat-messages">' + json.output.messages + '</ul>' +
+							'<form class="elgg-chat-input" data-guid=' + chat_guid + '><input type="text" /></form>' +
 						'</div>' +
 					'</div>'
 				);
@@ -52,6 +51,24 @@ define(function(require) {
 				var chatWindow = $('.elgg-chat-' + chat_guid);
 
 				chatWindow.scrollTop(chatWindow.height());
+			}
+		});
+	});
+
+	$(document).on('submit', '.elgg-chat-input', function(e) {
+		e.preventDefault();
+
+		var chat_guid = $(this).data('guid');
+		var input = $(this).find('input');
+		var message = input.val();
+
+		elgg.action('chat/message/save', {
+			data: {
+				container_guid: chat_guid,
+				message: message,
+			}, success: function(json) {
+				input.val('');
+				$('.elgg-chat-' + chat_guid).append(message);
 			}
 		});
 	});
