@@ -3,22 +3,34 @@
 	width: 100%;
 	height: 0;
 	position: fixed;
-	padding-right: 300px;
+	padding-right: 302px;
 	right: 0;
 	bottom: 0;
+}
+
+.elgg-module-chat > .elgg-head {
+	background-color: #F0F0F0;
+	padding: 5px 10px;
+	height: auto;
+	overflow: hidden;
+	border-bottom: 1px solid #DCDCDC;
+	box-shadow: inset 0 0 1px #FFFFFF;
 }
 
 .elgg-module-chat {
 	background: white;
 	width: 260px;
 	position: relative;
-	bottom: 360px;
+	bottom: 345px;
 	margin: 0;
 	float: right;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
 }
 
 .elgg-module-chat .elgg-chat-messages {
-	height: 265px;
+	height: 260px;
+	padding: 5px 10px;
 	overflow: auto;
 }
 
@@ -56,4 +68,9 @@
 
 #elgg-chat-users .elgg-status-online .elgg-icon-circle {
 	color: green;
+}
+
+.elgg-chat-input {
+	border-top: 1px solid #ccc;
+	padding: 4px;
 }
