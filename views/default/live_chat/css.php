@@ -3,6 +3,7 @@
 	width: 100%;
 	height: 0;
 	position: fixed;
+	padding-right: 300px;
 	right: 0;
 	bottom: 0;
 }
@@ -17,7 +18,7 @@
 }
 
 .elgg-module-chat .elgg-chat-messages {
-	height: 300px;
+	height: 265px;
 	overflow: auto;
 }
 
@@ -35,14 +36,18 @@
 	line-height: 1.2em;
 }
 
-#elgg-chat-bar #elgg-chat-users {
+#elgg-chat-users {
 	background: white;
 	width: 300px;
-	min-height: 400px;
-	position: relative;
-	bottom: 400px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
 	margin-bottom: 0;
-	float: right;
+}
+
+#elgg-chat-users > .elgg-body {
+	max-height: 400px;
+	overflow: auto;
 }
 
 #elgg-chat-users .elgg-icon-circle {

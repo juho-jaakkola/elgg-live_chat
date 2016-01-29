@@ -18,5 +18,6 @@ $module = elgg_view_module('featured', elgg_echo('friends'), $friends, array(
 ));
 
 echo <<<HTML
-	<div id="elgg-chat-bar">$module</div>
+	$module
+	<div id="elgg-chat-bar"></div>
 HTML;
