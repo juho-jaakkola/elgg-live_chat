@@ -8,14 +8,25 @@ define(function(require) {
 	var users = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
-		var view = mustache.render(messageTemplate, {
-			user_url: data.message.owner.url,
-			icon_url: data.message.owner.icon_url,
-			name: data.message.owner.name,
+		var chatId = '.elgg-chat-' + data.message.container_guid;
+
+		var message = mustache.render(messageTemplate, {
+			user_url: data.message.url,
+			icon_url: data.message.icon_url,
+			name: data.message.name,
 			message: data.message.message
 		});
 
-		$('.elgg-chat-' + data.message.container.guid).append(view);
+		if (!$(chatId).length) {
+			var view = mustache.render(moduleTemplate, {
+				name: 'Test',
+				chat_guid: data.message.container_guid
+			});
+
+			$('#elgg-chat-bar').append(view);
+		}
+
+		$(chatId).append(message);
 	});
 
 	pusher.registerListener('live_chat', function(data) {

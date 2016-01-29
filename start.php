@@ -30,15 +30,11 @@ elgg_register_event_handler('create', 'object', function($event, $type, $object)
 	$msg->consumer = 'live_chat';
 	$msg->message = (object) array(
 		'message' => $object->description,
-		'container' => (object) array(
-			'guid' => $object->container_guid,
-		),
-		'owner' => (object) array(
-			'guid' => $object->owner_guid,
-			'name' => $owner->name,
-			'url' => $owner->getURL(),
-			'icon_url' => $owner->getIconURL('tiny'),
-		),
+		'container_guid' => $object->container_guid,
+		'owner_guid' => $object->owner_guid,
+		'name' => $owner->name,
+		'url' => $owner->getURL(),
+		'icon_url' => $owner->getIconURL('tiny'),
 	);
 
 	foreach ($chat->getMemberGuids() as $user_guid) {
