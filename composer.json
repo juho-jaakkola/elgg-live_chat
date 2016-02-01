@@ -4,6 +4,7 @@
     "require": {
         "bower-asset/mustache.js": "~2.1.3",
         "composer/installers": ">=1.0.8",
+        "juho-jaakkola/elgg-chat": "dev-master",
         "juho-jaakkola/elgg-pusher": "dev-master"
     },
     "license": "GPL-2.0",
