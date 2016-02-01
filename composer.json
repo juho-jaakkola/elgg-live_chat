@@ -2,8 +2,9 @@
     "name": "juho-jaakkola/elgg-live_chat",
     "type": "elgg-plugin",
     "require": {
+        "bower-asset/mustache.js": "~2.1.3",
         "composer/installers": ">=1.0.8",
-        "bower-asset/mustache.js": "~2.1.3"
+        "juho-jaakkola/elgg-pusher": "dev-master"
     },
     "license": "GPL-2.0",
     "extra": {
