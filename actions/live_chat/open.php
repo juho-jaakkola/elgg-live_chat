@@ -26,7 +26,7 @@ $chats = elgg_get_entities_from_metadata(array(
 	),
 ));
 
-$messages = '';
+$json = array();
 
 if (empty($chats)) {
 	$chat = new ElggChat();
@@ -60,7 +60,6 @@ if (empty($chats)) {
 	));
 	$messages = array_reverse($messages);
 
-	$json = array();
 	foreach ($messages as $message) {
 		$owner = $message->getOwnerEntity();
 
