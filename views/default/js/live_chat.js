@@ -67,7 +67,7 @@ define(function(require) {
 				});
 
 				var view = mustache.render(moduleTemplate, {
-					name: 'Test',
+					name: name,
 					messages: messages,
 					chat_guid: chat_guid,
 					url: elgg.get_site_url() + 'chat/view/' + chat_guid
