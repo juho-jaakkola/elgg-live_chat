@@ -1,5 +1,8 @@
 <div class="elgg-module elgg-module-chat mustache-template">
-	<div class="elgg-head">{{name}}</div>
+	<div class="elgg-head">
+		{{name}}
+		<a href="{{url}}"><span class="float-alt elgg-icon fa fa-expand"></span></a>
+	</div>
 	<div class="elgg-body">
 		<ul class="elgg-chat-{{chat_guid}} elgg-chat-messages">{{{messages}}}</ul>
 		<form class="elgg-chat-input" data-guid="{{chat_guid}}" >

@@ -8,7 +8,8 @@ define(function(require) {
 	var users = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
-		var chatId = '.elgg-chat-' + data.message.container_guid;
+		var chat_guid = data.message.container_guid;
+		var chatId = '.elgg-chat-' + chat_guid;
 
 		var message = mustache.render(messageTemplate, {
 			user_url: data.message.url,
@@ -20,7 +21,8 @@ define(function(require) {
 		if (!$(chatId).length) {
 			var view = mustache.render(moduleTemplate, {
 				name: 'Test',
-				chat_guid: data.message.container_guid
+				chat_guid: chat_guid,
+				url: elgg.get_site_url() + 'chat/view/' + chat_guid
 			});
 
 			$('#elgg-chat-bar').append(view);
@@ -67,7 +69,8 @@ define(function(require) {
 				var view = mustache.render(moduleTemplate, {
 					name: 'Test',
 					messages: messages,
-					chat_guid: chat_guid
+					chat_guid: chat_guid,
+					url: elgg.get_site_url() + 'chat/view/' + chat_guid
 				});
 
 				$('#elgg-chat-bar').append(view);
