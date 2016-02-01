@@ -2,7 +2,7 @@
 
 $user = elgg_extract('entity', $vars);
 
-$image = elgg_view_entity_icon($user, 'small');
+$image = elgg_view_entity_icon($user, 'tiny');
 
 $title = elgg_view('output/url', array(
 	'text' => elgg_get_excerpt($user->name, 100),

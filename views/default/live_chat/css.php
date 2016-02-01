@@ -57,6 +57,10 @@
 	margin-bottom: 0;
 }
 
+#elgg-chat-users .elgg-image-block {
+	padding: 4px 0;
+}
+
 #elgg-chat-users > .elgg-body {
 	max-height: 400px;
 	overflow: auto;
