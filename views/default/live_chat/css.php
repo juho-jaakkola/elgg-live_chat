@@ -6,6 +6,7 @@
 	padding-right: 302px;
 	right: 0;
 	bottom: 0;
+	z-index: 1;
 }
 
 .elgg-module-chat > .elgg-head {
@@ -55,6 +56,7 @@
 	bottom: 0;
 	right: 0;
 	margin-bottom: 0;
+	z-index: 1;
 }
 
 #elgg-chat-users .elgg-image-block {
