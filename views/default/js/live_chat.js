@@ -5,7 +5,7 @@ define(function(require) {
 	var messageTemplate = require('text!live_chat/message.html');
 	var moduleTemplate = require('text!live_chat/module.html');
 
-	var users = {};
+	var chat_guids = {};
 
 	pusher.registerConsumer('live_chat', function(data) {
 		var chat_guid = data.message.container_guid;
@@ -47,9 +47,14 @@ define(function(require) {
 		var user_guid = $(this).data('guid');
 		var name = $(this).text();
 
-		if (user_guid in users) {
-			// TODO Move focus to the chat window?
+		if (user_guid in chat_guids) {
+			close(chat_guids[user_guid]);
 			return;
+		}
+
+		function close(chat_guid) {
+			$('[data-chat="' + chat_guid + '"]').remove();
+			delete chat_guids[user_guid];
 		}
 
 		// Check whether there is an existing chat with the chosen user
@@ -59,7 +64,7 @@ define(function(require) {
 			success: function(json) {
 				var chat_guid = json.output.chat_guid;
 
-				users[user_guid] = true;
+				chat_guids[user_guid] = chat_guid;
 
 				var messages = '';
 				$(json.output.messages).each(function(key, message) {
@@ -74,6 +79,10 @@ define(function(require) {
 				});
 
 				$('#elgg-chat-bar').append(view);
+
+				$('[data-close-chat="' + chat_guid + '"]').on('click', function () {
+					close(chat_guid);
+				});
 
 				var chatWindow = $('.elgg-chat-' + chat_guid);
 
@@ -92,7 +101,7 @@ define(function(require) {
 		elgg.action('chat/message/save', {
 			data: {
 				container_guid: chat_guid,
-				message: message,
+				message: message
 			}, success: function(json) {
 				input.val('');
 			}
